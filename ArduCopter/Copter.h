@@ -406,6 +406,7 @@ private:
     float arming_altitude_m;
 
     // Failsafe
+    public:
     struct {
         uint32_t last_heartbeat_ms;      // the time when the last HEARTBEAT message arrived from a GCS - used for triggering gcs failsafe
         uint32_t terrain_first_failure_ms;  // the first time terrain data access failed - used to calculate the duration of the failure
@@ -419,7 +420,7 @@ private:
         uint8_t terrain             : 1; // true if the missing terrain data failsafe has occurred
         uint8_t adsb                : 1; // true if an adsb related failsafe has occurred
     } failsafe;
-
+    private:
     bool any_failsafe_triggered() const {
         return failsafe.radio || battery.has_failsafed() || failsafe.gcs || failsafe.ekf || failsafe.terrain || failsafe.adsb;
     }
@@ -732,7 +733,9 @@ private:
     void failsafe_gcs_on_event(void);
     void failsafe_gcs_off_event(void);
     void failsafe_terrain_check();
+    public:
     void failsafe_terrain_set_status(bool data_ok);
+    private:
     void failsafe_terrain_on_event();
     void gpsglitch_check();
     void set_mode_RTL_or_land_with_pause(ModeReason reason);
@@ -990,6 +993,7 @@ private:
 #if MODE_ZIGZAG_ENABLED == ENABLED
     ModeZigZag mode_zigzag;
 #endif
+    ModeDrawStar mode_DrawStar;
 #if MODE_AUTOROTATE_ENABLED == ENABLED
     ModeAutorotate mode_autorotate;
 #endif

@@ -8,7 +8,7 @@
 /*
   constructor for Mode object
  */
-Mode::Mode(void) :
+Mode::Mode(void) :    //初始化
     g(copter.g),
     g2(copter.g2),
     wp_nav(copter.wp_nav),
@@ -28,7 +28,7 @@ Mode::Mode(void) :
 float Mode::auto_takeoff_no_nav_alt_cm = 0;
 
 // return the static controller object corresponding to supplied mode
-Mode *Copter::mode_from_mode_num(const Mode::Number mode)
+Mode *Copter::mode_from_mode_num(const Mode::Number mode)  //数字返回对应模式
 {
     Mode *ret = nullptr;
 
@@ -171,6 +171,10 @@ Mode *Copter::mode_from_mode_num(const Mode::Number mode)
             break;
 #endif
 
+        case Mode::Number::DRAWSTAR:
+            ret = &mode_DrawStar;
+            break;
+
         default:
             break;
     }
@@ -183,7 +187,7 @@ Mode *Copter::mode_from_mode_num(const Mode::Number mode)
 // optional force parameter used to force the flight mode change (used only first time mode is set)
 // returns true if mode was successfully set
 // ACRO, STABILIZE, ALTHOLD, LAND, DRIFT and SPORT can always be set successfully but the return state of other flight modes should be checked and the caller should deal with failures appropriately
-bool Copter::set_mode(Mode::Number mode, ModeReason reason)
+bool Copter::set_mode(Mode::Number mode, ModeReason reason)  //设置模式
 {
 
     // return immediately if we are already in the desired mode
@@ -311,7 +315,7 @@ bool Copter::set_mode(const uint8_t new_mode, const ModeReason reason)
 
 // update_flight_mode - calls the appropriate attitude controllers based on flight mode
 // called at 100hz or more
-void Copter::update_flight_mode()
+void Copter::update_flight_mode()  //更新飞行模式
 {
     surface_tracking.invalidate_for_logging();  // invalidate surface tracking alt, flight mode will set to true if used
 
